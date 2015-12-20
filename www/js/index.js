@@ -44,6 +44,61 @@ function wlCommonInit(){
     if (locale.indexOf("he")!=-1) languageChanged("hebrew");
 }
 
+function languageChanged(lang) {
+	if (typeof(lang)!="string")
+		lang = $("#languages").val();
+	
+    switch (lang){
+    	case "english":
+    		setEnglish();
+    		break;
+    	case "french":
+    		setFrench();
+    		break;
+    	case "russian":
+    		setRussian();
+    		break;
+    	case "hebrew":
+			alert("in case setHebrew");
+    		setHebrew();
+    		break;
+    }
+    
+    if ($("#languages").val()=="hebrew") {
+    	$("#wrapper").css({direction: 'rtl'});
+	} else {
+    	$("#wrapper").css({direction: 'ltr'});
+	}
+    	
+    $("#sampleText").html(Messages.sampleText);
+    $("#headerText").html(Messages.headerText);
+    $("#actionsLabel").html(Messages.actionsLabel);
+}
+
+function setFrench(){
+	Messages.headerText = "Traduction";
+	Messages.actionsLabel = "Sélectionnez langue:";
+	Messages.sampleText = "ceci est un exemple de texte en français.";
+}
+
+function setRussian(){
+	Messages.headerText = "Перевод";
+	Messages.actionsLabel = "Выбор языка:";
+	Messages.sampleText = "Это пример текста на русском языке.";
+}
+
+function setHebrew(){
+	Messages.headerText = "תרגום";
+	Messages.actionsLabel = "בחר שפה:";
+	Messages.sampleText = "זו דוגמא של טקסט בעברית.";
+}
+
+function setEnglish(){
+	Messages.headerText = "Translation";
+	Messages.actionsLabel = "Select language:";
+	Messages.sampleText = "This is a sample text in english.";
+}
+
 var app = {
     // Application Constructor
     initialize: function() {
@@ -61,18 +116,11 @@ var app = {
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
     },
-
-    // Update the DOM on a received event.
-    receivedEvent: function(id) {
+	
+	// Update the DOM on a received event.
+	receivedEvent: function(id) {
         var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        console.log('Received Event: ' + id);
-    }
+	}
 };
 
 app.initialize();
