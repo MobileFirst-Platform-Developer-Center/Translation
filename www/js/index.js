@@ -32,16 +32,33 @@ var wlInitOptions = {
 // Called automatically after MFP framework initialization by WL.Client.init(wlInitOptions).
 function wlCommonInit(){
     $('#languages').bind('change', languageChanged);
-	
-    var locale = WL.App.getDeviceLocale();
-    var lang = WL.App.getDeviceLanguage();
-    WL.Logger.debug(">> Detected locale: " + locale);
-    WL.Logger.debug(">> Detected language: " + lang);
 
-    if (locale.indexOf("en")!=-1) languageChanged("english");
-    if (locale.indexOf("fr")!=-1) languageChanged("french");
-    if (locale.indexOf("ru")!=-1) languageChanged("russian");
-    if (locale.indexOf("he")!=-1) languageChanged("hebrew");
+    var locale;
+	navigator.globalization.getLocaleName(
+    	function (localeValue) {
+			locale = "localeValue.value";
+			WL.Logger.debug(">> Detected locale: " + locale);
+			
+			if (locale.indexOf("en",2)!=-1) languageChanged("english");
+			if (locale.indexOf("fr",2)!=-1) languageChanged("french");
+			if (locale.indexOf("ru",2)!=-1) languageChanged("russian");
+			if (locale.indexOf("he",2)!=-1) languageChanged("hebrew");
+		},
+    	function() {
+			WL.Logger.debug(">> Unable to detect locale.");
+		}
+	);
+	
+	var lang;
+	navigator.globalization.getPreferredLanguage(
+    	function (langValue) {
+			lang = langValue.value;
+			WL.Logger.debug(">> Detected language: " + lang);
+		},
+    	function() {
+			WL.Logger.debug(">> Unable to detect language.");
+		}
+	);
 }
 
 function languageChanged(lang) {
@@ -59,7 +76,6 @@ function languageChanged(lang) {
     		setRussian();
     		break;
     	case "hebrew":
-			alert("in case setHebrew");
     		setHebrew();
     		break;
     }
