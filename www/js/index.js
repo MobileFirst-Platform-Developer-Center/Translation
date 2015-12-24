@@ -29,15 +29,16 @@ var wlInitOptions = {
     // For initialization options please refer to IBM MobileFirst Platform Foundation Knowledge Center.
 };
 
+// Global variable to store the current device language.
+var lang;
+
 // Called automatically after MFP framework initialization by WL.Client.init(wlInitOptions).
 function wlCommonInit(){
     $('#languages').bind('change', languageChanged);
 
-    var locale;
 	navigator.globalization.getLocaleName(
     	function (localeValue) {
-			locale = "localeValue.value";
-			WL.Logger.debug(">> Detected locale: " + locale);
+			WL.Logger.debug(">> Detected locale: " + localeValue.value);
 			
 			if (locale.indexOf("en",2)!=-1) languageChanged("english");
 			if (locale.indexOf("fr",2)!=-1) languageChanged("french");
@@ -49,11 +50,10 @@ function wlCommonInit(){
 		}
 	);
 	
-	var lang;
 	navigator.globalization.getPreferredLanguage(
     	function (langValue) {
 			lang = langValue.value;
-			WL.Logger.debug(">> Detected language: " + lang);
+			WL.Logger.debug(">> Detected language: " + langValue.value);
 		},
     	function() {
 			WL.Logger.debug(">> Unable to detect language.");
