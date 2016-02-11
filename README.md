@@ -1,6 +1,7 @@
 IBM MobileFirst Platform Foundation
 ===
 ## Translation
+A sample application demonstrating how to multi-lingual strips in a Cordova application.
 
 ### Tutorials
 https://mobilefirstplatform.ibmcloud.com/tutorials/en/foundation/8.0/using-the-mfpf-sdk/translation/
